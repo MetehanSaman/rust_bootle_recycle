@@ -32,7 +32,7 @@ The vision of this program is to create an environmentally conscious community a
    - Users can convert the bottle count in their accounts into money at a specified value and withdraw this money using the withdrawal option. The system automatically performs this conversion and updates users' balances.
 
 ## Installation Details
-### Installation Details:
+
 To run the project in a local environment, follow these steps:
 
 1. **Download or Clone the Project:**
