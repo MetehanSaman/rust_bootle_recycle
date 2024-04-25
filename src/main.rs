@@ -1,7 +1,11 @@
 use std::io;
 use std::io::Write;
 use sha2::{Sha256, Digest};
+use ic_cdk::export::candid::{CandidType, Deserialize};
+use ic_cdk::storage;
+use std::collections::HashMap;
 
+#[derive(CandidType, Deserialize)]
 struct HesapSahibi { // Hesap verilerini tutmak için oluşturulan yapı
     ad: String,
     soyad: String,
@@ -68,6 +72,18 @@ fn hesap_oluştur() -> HesapSahibi { // Kullanıcıdan verileri alıp "HesapSahi
         giriş: false
     }
 }
+#[update]
+fn hesap_kaydet(kullanici: HesapSahibi) {
+    let hesaplar = storage::get_mut::<HashMap<String, HesapSahibi>>();
+    let key = format!("{}{}", kullanici.ad, kullanici.soyad);
+    hesaplar.insert(key, kullanici);
+}
+#[query]
+fn hesap_yükle(ad: String, soyad: String) -> Option<HesapSahibi> {
+    let hesaplar = storage::get::<HashMap<String, HesapSahibi>>();
+    let key = format!("{}{}", ad, soyad);
+    hesaplar.get(&key).cloned()
+}
 
 fn main() {
     print!("\nŞişe Geri Dönüştürücüsüne Hoş Geldiniz \n");
@@ -87,7 +103,7 @@ fn main() {
     loop {
         let mut seçenek_string = String::new();
 
-        print!("1-Şişe Ekle \n2-Şişe Sayısını ve Bakiyeyi Göster \n3-Şişeleri Paraya Dönüştür \n4-Para Çek \n0-Çikiş \nSeçenek:");
+        print!("1-Şişe Ekle \n2-Şişe Sayısını ve Bakiyeyi Göster \n3-Şişeleri Paraya Dönüştür \n4-Para Çek \n5-Kullanıcı Yükle \n0-Çikiş \nSeçenek:");
         io::stdout().flush().expect("Konsola yazdirma hatasi");
         io::stdin().read_line(&mut seçenek_string).expect("Seçenek okuma hatasi");
 
@@ -104,6 +120,7 @@ fn main() {
         
         match seçenek{ // Kullanıcının seçtiği seçeneğe göre fonksiyonları yerine getirme aşaması
             0 => {
+                hesap_kaydet(_kullanici.clone()); // Kullanıcıyı depolama
                 break;
             }
             1 => {
@@ -176,6 +193,25 @@ fn main() {
                 else{
                     println!("");
                     println!("Miktarı Kontrol Ediniz! \n");
+                }
+            }
+            5=> {
+
+                let mut _ad = String::new();
+                print!("İsminizi Giriniz: ");
+                io::stdout().flush().expect("Konsola yazdirma hatasi");
+                io::stdin().read_line(&mut _ad).expect("İsim okuma hatasi");
+
+                let mut _soyad = String::new();
+                print!("Soyisminizi Giriniz: ");
+                io::stdout().flush().expect("Konsola yazdirma hatasi");
+                io::stdin().read_line(&mut _soyad).expect("Soyisim okuma hatasi");
+
+                let yüklenen_kullanici = hesap_yükle(_ad.clone(), _soyad.clone()); // Kullanıcıyı yükleme
+                if let Some(kullanici) = yüklenen_kullanici {
+                    _kullanici = kullanici; // Yüklenen kullanıcıyı mevcut kullanıcıya atama
+                } else {
+                    println!("Kullanıcı bulunamadı.");
                 }
             }
             _ => {
