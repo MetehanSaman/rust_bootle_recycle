@@ -31,7 +31,7 @@ The vision of this program is to create an environmentally conscious community a
 3. **Automatic Money Conversion and Withdrawal**
    - Users can convert the bottle count in their accounts into money at a specified value and withdraw this money using the withdrawal option. The system automatically performs this conversion and updates users' balances.
 
-4. **Integration with Internet Computer Protocol (ICP)**
+4. **Integration with ICP**
    - The system now integrates with the ICP, enabling the secure access to user accounts and transactions.
 
 ## Installation Details
