@@ -30,7 +30,7 @@ Bu programın vizyonu, çevreye duyarlı bir toplum oluşturmak ve geri dönüş
 ### 3. Otomatik Para Dönüşümü ve Para Çekme
 - Kullanıcılar, hesaplarındaki şişe sayısını belirli bir değer karşılığında paraya dönüştürebilirler ve bu parayı para çekme seçeneğini kullanarak elde edebilirler. Sistem, bu dönüşümü otomatik olarak gerçekleştirir ve kullanıcıların bakiyelerini günceller.
 
-4. **Integration with Internet Computer Protocol (ICP)**
+### 4. ICP Entegrasyonu
    - Sistem ICP protokülünü de entegre ederek kullanıcı hesaplarına ve işlemlere güvenli bir şekilde yedeklemeyi ve erişmeyi sağlar.
 
 ## Yükleme Detayları
